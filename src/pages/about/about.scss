@@ -1,0 +1,32 @@
+page-about {
+
+    .item-table{
+        background: #d6ecff;
+        margin: 16px -16px;
+        padding: 16px;
+
+        table{
+            width: 100%;
+            table-layout: fixed;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            
+            tr{
+                
+                th{
+                    text-align: left;
+                    width: 150px;
+                    font-weight: 700;
+                }
+                
+                th, td{
+                    
+                    font-size: 13px;
+                    padding: 10px 5px;
+                    vertical-align: top;
+                }
+            }
+        }
+    }
+
+}

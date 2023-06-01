@@ -1,0 +1,143 @@
+<ion-header class="main-header remove">
+    <ion-navbar>
+        <ion-title>Registration</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <form #f="ngForm" (ngSubmit)="f.form.valid && submit()">
+        
+        <div class="main-field">
+            <h3>Basic information</h3>
+          
+                <div class="cs-form mb10">
+                    
+                    
+                    <ion-list>
+                        <ion-item class="cs-input" [ngClass]="{'error':f.submitted && first_name?.invalid}">
+                            <ion-label floating>Name <span>*</span></ion-label>
+                            <ion-input type="text" name="first_name" #first_name="ngModel" [(ngModel)]="data.first_name"  (keypress)="namecheck($event)" required></ion-input>
+                        </ion-item>
+                        
+                        <ion-item class="cs-input" [ngClass]="{'error':f.submitted && mobile_no?.invalid}" >
+                            <ion-label floating>Mobile No. <span>*</span></ion-label>
+                            <ion-input type="text" name="mobile_no" #mobile_no="ngModel" [(ngModel)]="data.mobile_no" required  (keypress)="MobileNumber($event)" readonly></ion-input>
+                        </ion-item>
+                        
+                        <div *ngIf="data.type=='Plumber'">
+                            <ion-item  class="cs-date" >
+                                <ion-label>Date of Birth</ion-label>
+                                <ion-datetime displayFormat="DD/MM/YYYY" max={{today_date}} type="text"  name="dob" #dob="ngModel" [(ngModel)]="data.dob" >
+                                </ion-datetime>
+                            </ion-item>
+                            <!-- <ion-item class="cs-input" [ngClass]="{'error':f.submitted && dist?.invalid}">
+                                <ion-label floating>Distributor / Direct Dealer</ion-label>
+                                <ion-select name="dist" [(ngModel)]="data.dist" #dist="ngModel" required>
+                                    <ion-option *ngFor="let row of dr_list" value="{{row.id}}">{{row.company_name}}</ion-option>
+                                </ion-select>
+                                <ion-input type="text" name="dist" #dist="ngModel" [(ngModel)]="data.dist"></ion-input>
+                            </ion-item> -->
+                            
+                            <ion-item class="cs-input" >
+                                <ion-label floating>Dealer Name</ion-label>
+                                <ion-input type="text" name="dealer_contact_person" #dealer_contact_person="ngModel" [(ngModel)]="data.dealer_contact_person" (keypress)="namecheck($event)" ></ion-input>
+                            </ion-item>
+                            
+                            <div [ngClass]="{'error':f.submitted && dealer_mobile?.invalid}">
+                                <ion-item class="cs-input mb0">
+                                    <ion-label floating>Dealer Mobile No.</ion-label>
+                                    <ion-input type="tel" name="dealer_mobile" #dealer_mobile="ngModel" [(ngModel)]="data.dealer_mobile" (keypress)="MobileNumber($event)" min="0" maxlength="10" minlength="10" >
+                                    </ion-input>
+                                </ion-item>
+                                <div class="eror" *ngIf="f.submitted && dealer_mobile?.invalid">
+                                    <p>Enter 10 Digits</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-list>
+                </div>
+                
+                <h3 class="mt10">Address information</h3>
+                
+                <div class="cs-form">
+                    <ion-list>
+                        <ion-item class="cs-input" [ngClass]="{'error':(f.address && address?.invalid) || (f.submitted && !address.valid)}">
+                            <ion-label floating>Street <span>*</span></ion-label>
+                            <ion-input type="text"  type="text"  name="address"  #address="ngModel" [(ngModel)]="data.address" (ngModelChange)="caps_add(data.address)" required></ion-input>
+                        </ion-item>
+                        
+                        <ion-item class="cs-select" [ngClass]="{'error':f.submitted && state?.invalid}">
+                            <ion-label >State <span>*</span></ion-label>
+                            <ion-select name="state" [(ngModel)]="data.state" #state="ngModel" (ngModelChange)="getDistrictList(data.state)" required>
+                                <ion-option *ngFor="let row of state_list" value="{{row.state_name}}">{{row.state_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        
+                        <ion-item class="cs-select" [ngClass]="{'error':f.submitted && district?.invalid}">
+                            <ion-label >District <span>*</span></ion-label>
+                            <ion-select name="district"[(ngModel)]="data.district" #district="ngModel" required>
+                                <ion-option *ngFor="let row of district_list" value="{{row.district_name}}">{{row.district_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        
+                        <ion-item class="cs-input" [ngClass]="{'error':f.submitted && city?.invalid}">
+                            <ion-label floating >City <span>*</span></ion-label>
+                            <ion-input type="text" name="city" [(ngModel)]="data.city" #city="ngModel" required ></ion-input>
+                        </ion-item>
+                        
+                        <ion-item class="cs-input mb32" [ngClass]="{'error':f.submitted && pincode?.invalid}">
+                            <ion-label floating>Pincode <span>*</span></ion-label>
+                            <ion-input type="tel" name="pincode" [(ngModel)]="data.pincode" #pincode="ngModel" maxlength="6" minlength="6" (keypress)="MobileNumber($event)" required></ion-input>
+                        </ion-item>
+                    </ion-list>
+                    
+                </div>		  
+                <div class="ragistration-fields"  *ngIf="data.type=='Plumber'">
+                    <div class="cs-form">
+                        <ion-list>
+                            <ion-item class="cs-select" >
+                                <ion-label>Select Document</ion-label>
+                                <ion-select name="document_type	" [(ngModel)]="data.document_type" #document_type="ngModel" >
+                                    <ion-option value="Adharcard">Adhar card</ion-option>
+                                    <ion-option value="PanCard">Pan Card</ion-option>
+                                    <ion-option value="VoterCard">Voter Card</ion-option>
+                                </ion-select>
+                            </ion-item>
+                            
+                            <div class="upload-document" (click)="onUploadChange()" >
+                                <p *ngIf="data.document_image==''"><i class="material-icons">add_circle</i><br>Upload Document</p>
+                                <img *ngIf="data.document_image != ''"[src]="data.document_image" alt="">
+                            </div>
+                            
+                            <ion-item class="cs-input" [ngClass]="{'error':f.submitted && document_no?.invalid}" *ngIf="data.document_type=='Adharcard'" >
+                                <ion-label floating>Aadhaar Number*</ion-label>
+                                <ion-input type="tel" name="document_no" #document_no="ngModel" [(ngModel)]="data.document_no"  maxlength="12" minlength="12"  ></ion-input>
+                            </ion-item>		
+                            <ion-item class="cs-input" *ngIf="data.document_type=='PanCard'"  [ngClass]="{'error':f.submitted && document_no?.invalid}">
+                                <ion-label floating>Pan Card Number</ion-label>
+                                <ion-input type="text" name="document_no" #document_no="ngModel" [(ngModel)]="data.document_no"   ></ion-input>
+                            </ion-item>		
+                            <ion-item class="cs-input" *ngIf="data.document_type=='VoterCard'"  [ngClass]="{'error':f.submitted && document_no?.invalid}">
+                                <ion-label floating>Voter Card Number</ion-label>
+                                <ion-input type="text" name="document_no" #document_no="ngModel" [(ngModel)]="data.document_no"  ></ion-input>
+                            </ion-item>
+                            
+                            <ion-item class="cs-input" [ngClass]="{'error':f.submitted && sales_user?.invalid}">
+                                <ion-label floating >Sales User Name <span></span></ion-label>
+                                <ion-input type="text" name="sales_user_name" [(ngModel)]="data.sales_user_name" ></ion-input>
+                            </ion-item>
+                            
+                            <ion-item class="cs-input" [ngClass]="{'error':f.submitted && referral_by_code?.invalid}" *ngIf="data.type=='Plumber'" >
+                                <ion-label floating>Referral Code/Employee ID</ion-label>
+                                <ion-input type="text" name="referral_by_code"  [(ngModel)]="data.referral_by_code"></ion-input>
+                            </ion-item>  
+                        </ion-list>
+                    </div>
+                </div>
+            
+        </div>
+        <button ion-button class="cs-btn">
+            Submit
+        </button>
+    </form>
+</ion-content>

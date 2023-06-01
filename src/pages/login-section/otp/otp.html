@@ -1,0 +1,41 @@
+
+
+<ion-content style="background: #F8FFFC;">
+	<div class="main-login">
+		<div class="login-back">
+			<button (click)="onBackButtonClickHanlder()"><i class="material-icons">keyboard_backspace</i></button>
+		</div>
+		<div class="logo">
+			<img src="assets/imgs/logo.png">
+		</div>
+		<form  #f="ngForm" (ngSubmit)="f.form.valid && onSubmitUserOtpHandler()">
+			<div class="mobile-login">
+				<div class="text">
+					<p>Enter 6 digit number that sent to - </p>
+					<span class="blue-color">+91 {{mobileNo}}</span>
+				</div>
+				<div class="input-section">
+					<div class="input-adjust m16 mb0">
+						<input class="pl16 radius-none" type="tel" name="otp" placeholder="Enter OTP" #otp="ngModel" [(ngModel)]="data.otp" (keypress)="dbService.onMobileValidateHandler($event)" (ngModelChange)="onValidateUserOtpHandler()" min="0" maxlength="6" minlength="6" required>
+						<div class="eror" *ngIf="!isOtpValid && otp?.touched">
+							<p>Enter Correct OTP value</p>
+						</div>
+					</div>
+					<div class="resend opacity" *ngIf="resendActiveClass==true">
+						<a >Resend Otp will Be available in {{ otpInputMaxTime }} sec</a>
+					</div>
+					<div class="resend "  *ngIf="resendActiveClass==false">
+						<a (click)="onResendOtpHandler()">Resend OTP</a>
+					</div>
+				</div>
+
+				<div class="login-btn" >
+					<button [disabled]="data.otp != smsOTP">Submit</button>
+				</div>
+
+			</div>
+		</form>
+
+
+	</div>
+</ion-content>

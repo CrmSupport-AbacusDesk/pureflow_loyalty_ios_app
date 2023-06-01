@@ -1,0 +1,125 @@
+page-point-list {
+    
+    .point-table{
+        
+        margin: 0px -16px;
+        padding: 0px 16px;
+        background: #f7f7f7;
+        margin-bottom: 16px;
+        border-top: 1px #b3b3b3 dashed;
+        border-bottom: 1px #b3b3b3 dashed;
+
+
+        
+        table{
+            width: 100%;
+            table-layout: fixed;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            
+            tr{
+                td{
+                    font-size: 14px;
+                    line-height: 20px;
+                    padding: 10px 5px;
+                    
+                    p{
+                        display: flex;
+                        align-items: center;
+                        grid-column-gap: 5px;
+                        justify-content: flex-end;
+                    }
+                    
+                    &.point-font, p{
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+                    
+                    
+                    
+                    &.red-text{
+                        color: #ff0000;
+                    }
+                }
+            }
+        }
+        
+        
+        .top-sparte{
+            border-top: 1px solid #ccc;
+        }
+        .bottom-sparte{
+            border-top: 1px solid #ccc;
+        }
+        
+        .total-bg{
+            background: #f9f9f9;;
+        }
+    }
+    
+
+    .green-text{
+        color: #32a901 !important;
+    }
+    
+    
+    
+    .card-list {
+        display: grid;
+        grid-template-columns: 1fr 100px;
+        align-items: center;
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        padding: 16px 10px;
+        border-radius: 16px;
+        margin-bottom: 16px;
+        
+        
+        .card-content {
+            display: flex;
+            align-items: center;
+            grid-column-gap: 10px;
+
+            p{
+                width: 100%;
+                font-size: 14px;
+            }
+            
+            img{
+                height: 25px;
+                object-fit: cover;
+            }
+        }
+        
+        .points {
+            text-align: right;
+            font-weight: 600;
+            font-size: 18px;
+            position: relative;
+            padding-right: 22px;
+            
+            
+            
+            &.flat{
+                padding-right: 0px;
+                
+                &:after{
+                    display: none;
+                }
+            }
+            
+            
+            &:after{
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: 0;
+                background: url('../../../assets/icon/next.svg') no-repeat;
+                background-size: cover;
+                height: 25px;
+                width: 20px;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+}

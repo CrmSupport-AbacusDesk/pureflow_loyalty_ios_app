@@ -1,0 +1,68 @@
+
+<ion-header >
+    <ion-navbar>
+        <ion-title>Category</ion-title>
+    </ion-navbar>
+    <ion-toolbar class="primary-bg">
+        <div class="search add-search">
+            <div class="filter">
+                <!-- getProductCategoryList(filter.category_name);getProductSubCategoryList() -->
+                <ion-searchbar type='text' name='search' [(ngModel)]="filter.search" 
+                (ngModelChange)="filter.search=='' ? getProductCategoryList(filter.search) : ''" (keyup.enter)="getProductCategoryList(filter.search)"></ion-searchbar>
+            </div>
+        </div>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="listing grid-listing">
+    
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content  pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    
+    
+    <div *ngIf="!prod_cat_list.length && no_rec" class="data-not">
+        <img  src="assets/imgs/data-not-found.png">
+    </div>
+        
+    <!-- <div>
+       <button (click)="goToNewArrivals()"> New Arrivals</button>
+    </div> -->
+    
+    <div *ngIf="prod_cat_list.length" class="main-div">
+        <ion-list *ngFor="let list of prod_cat_list; let i=index" >
+            <!-- <a>{{list.image}}</a> -->
+            <button  *ngIf="!list.image" ion-item (click)="goOnCategoryListPage(list.main_category)">
+                <div class="image-manage">
+                    <i class="material-icons">perm_media</i>
+                </div>
+                <p>{{list.main_category}}</p>
+            </button> 
+            <button  *ngIf="list.image" ion-item (click)="goOnCategoryListPage(list.main_category)">
+                <div class="image-manage">
+                    <img  src="{{prd_img_url + list.actual_image_name}}">
+                </div>
+                <p>{{list.main_category}}</p>
+            </button>  
+        </ion-list>
+        
+    </div>
+
+    <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+        <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll> -->
+
+
+    <div class="main-div" *ngIf="!prod_cat_list.length && !no_rec">
+        <ion-list *ngFor="let row of skelton" >
+            <button class="skleton-box"></button> 
+        </ion-list>
+    </div>
+    
+</ion-content>
+

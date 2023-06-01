@@ -1,0 +1,105 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-android-support-gradle-release": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "call-number": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true",
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova.plugins.diagnostic": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+      "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-request-location-accuracy": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-document-viewer": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "polarcape-cordova-plugin-document-handler": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-market": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "uk.co.workingedge.cordova.plugin.sqliteporter": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-media": {
+      "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO",
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "cordova-plugin-telerik-imagepicker": {
+      "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.abacusdesk.pureflow"
+    }
+  }
+}

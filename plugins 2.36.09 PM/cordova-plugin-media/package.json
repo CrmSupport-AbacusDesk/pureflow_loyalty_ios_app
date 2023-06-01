@@ -1,0 +1,82 @@
+{
+  "_from": "cordova-plugin-media@^5.0.4",
+  "_id": "cordova-plugin-media@5.0.4",
+  "_inBundle": false,
+  "_integrity": "sha512-mAqincYqOT5gu5LWyfgJu3qmOq+lhLAKhnOZULpG622FvYiHjjfsoJ/fkI55WwI3FIcHeeyhToGvHXBCNJePZg==",
+  "_location": "/cordova-plugin-media",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-media@^5.0.4",
+    "name": "cordova-plugin-media",
+    "escapedName": "cordova-plugin-media",
+    "rawSpec": "^5.0.4",
+    "saveSpec": null,
+    "fetchSpec": "^5.0.4"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-media/-/cordova-plugin-media-5.0.4.tgz",
+  "_shasum": "4813fd127132055099fa1a86524a739638992ea6",
+  "_spec": "cordova-plugin-media@^5.0.4",
+  "_where": "/Users/abacus/Downloads/mohit_singh/respite_app-main (1)",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/apache/cordova-plugin-media/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-media",
+    "platforms": [
+      "android",
+      "browser",
+      "ios",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova Media Plugin",
+  "devDependencies": {
+    "@cordova/eslint-config": "^4.0.0"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "3.0.0": {
+        "cordova-android": ">=6.1.0"
+      },
+      "4.0.0": {
+        "cordova-android": ">=6.3.0"
+      },
+      "6.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "homepage": "https://github.com/apache/cordova-plugin-media#readme",
+  "keywords": [
+    "cordova",
+    "media",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-browser",
+    "cordova-ios",
+    "cordova-windows"
+  ],
+  "license": "Apache-2.0",
+  "name": "cordova-plugin-media",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apache/cordova-plugin-media.git"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npm run lint"
+  },
+  "types": "./types/index.d.ts",
+  "version": "5.0.4"
+}

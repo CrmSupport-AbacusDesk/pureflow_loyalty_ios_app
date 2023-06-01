@@ -1,0 +1,77 @@
+<!--
+  Generated template for the Super30Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="main-header remove">
+    <ion-navbar>
+        <ion-title>super30 || Your Rank : {{SelfData.index}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content class="super-plumber">
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+
+    <div *ngIf="!plumber_list.length" class="data-not">
+        <img src="assets/imgs/data-not-found.png">
+    </div>
+
+    <div>
+
+        <ion-list *ngFor="let row of plumber_list; let i = index;">
+            <button ion-item>
+      <div class="list " [ngClass]="row.id == dbService.userStorageData.id?'active':''">
+        <div class="point">
+          <h4>{{i+1}}</h4>
+        </div>
+
+        <div class="detail">
+          <div class="info">
+            <h4>{{row.first_name | titlecase}}</h4>
+            <!-- <p>Wallet Balance : {{row.balance_point + row.reg_points}}</p> -->
+            <p>{{row.city | titlecase}} {{row.state | titlecase}}</p>
+            <div class="pulmber-rating">
+              <ul>
+                <li [ngClass]="{'active':row.rating>='1'}">
+                  <a><i  class="material-icons">star</i></a>
+                </li>
+
+                <li [ngClass]="{'active':row.rating>='2'}">
+                  <a><i  class="material-icons">star</i></a>
+                </li>
+                <li [ngClass]="{'active':row.rating>='3'}">
+                  <a><i  class="material-icons">star</i></a>
+                </li >
+
+                <li [ngClass]="{'active':row.rating>='4'}">
+                  <a><i  class="material-icons">star</i></a>
+                </li>
+
+                <li [ngClass]="{'active':row.rating>='5'}">
+                    <a><i  class="material-icons">star</i></a>
+                  </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="photo">
+            <img [src]="row.profile" alt="">
+            <!-- <img src="http://phpstack-83335-1831788.cloudwaysapps.com/dd_api/app/uploads/{{row.profile}}" onerror="this.src='http://phpstack-83335-1831788.cloudwaysapps.com/uploads/no-thumbnail.jpg'"> -->
+          </div>
+        </div>
+      </div>
+    </button>
+        </ion-list>
+    </div>
+
+
+
+</ion-content>

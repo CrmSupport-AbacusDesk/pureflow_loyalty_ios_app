@@ -1,0 +1,7 @@
+{
+  "name": "dbvalves",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

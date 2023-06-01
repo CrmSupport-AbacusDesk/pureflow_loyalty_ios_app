@@ -1,0 +1,69 @@
+
+<ion-header class="main-header remove" >
+    <ion-navbar >
+        <ion-title *ngIf="!filter.globalSearchData" >{{prod_cat.main_category |titlecase}} </ion-title>
+        <ion-title *ngIf="filter.globalSearchData" >{{filter.categoryName | titlecase}} - Product List</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <div class="search add-search">
+            <div class="filter">
+                <ion-searchbar type='text' name='search'  [(ngModel)]="filter.search" (ngModelChange)="filter.search=='' ? getProductList(cat_id,filter.search) : ''" (keyup.enter)="getProductList(cat_id,filter.search)"></ion-searchbar>
+            </div>
+
+        </div>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="listing grid-listing sub-category">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <div *ngIf="no_rec" class="data-not">
+        <img src="assets/imgs/data-not-found.png">
+
+    </div>
+
+    <div *ngIf="prod_list.length" class="main-div">
+        <div class="sub-listing tydo-list p0">
+            <!-- <div class="tydo-item">
+                <h3>{{prod_cat.category_name}}<br><span>"{{prod_list.length}}/{{total_count}}" Products Found</span> </h3>
+                <img *ngIf="prod_cat.subcat_image" src="{{imageUrl+prod_cat.subcat_image}}">
+                <img *ngIf="!prod_cat.subcat_image" src="assets/imgs/no-thumbnail.jpg">
+            </div> -->
+
+            <ion-list (click)="goOnProductSubDetailPage(list.id)" *ngFor="let list of prod_list;let i=index">
+                <button ion-item>
+                    <div class="image-manage">                        
+                        <img *ngIf="list.image" src="{{imageUrl + list.actual_image_name}}">
+                        <i class="material-icons" *ngIf="!list.image">perm_media</i>
+                        <!-- <img *ngIf="!list.image" src="assets/imgs/no-thumbnail.jpg" > -->
+                        
+                    </div>
+                    <div class="detail">
+                        <h4>{{list.product_name}} ({{list.material_code}})</h4>
+                        <h3 class="m0"><span>₹​</span>{{list.price}}/-</h3>
+                    </div>
+                </button>
+            </ion-list>
+        </div>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="flag!=1">
+            <!-- <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+            </ion-infinite-scroll-content> -->
+            <div class="sub-listing tydo-list p0">
+                <ion-list class="skleton-box-2" *ngFor="let row of skelton"></ion-list>
+            </div>
+        </ion-infinite-scroll>
+    </div>
+
+    <div class="main-div" *ngIf="!prod_list.length && flag!=1">
+        <div class="sub-listing tydo-list p0">
+            <!-- <div class="skleton-box-1"></div> -->
+
+            <ion-list class="skleton-box-2" *ngFor="let row of skelton"></ion-list>
+        </div>
+    </div>
+</ion-content>

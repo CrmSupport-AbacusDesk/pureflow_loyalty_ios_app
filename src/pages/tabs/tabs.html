@@ -1,0 +1,21 @@
+<div *ngIf="dbService.userStorageData?.type == 'Customer'" class="tabs">
+    <ion-tabs  selectedIndex= {{index}}>
+        <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="tab-home"></ion-tab>
+        <ion-tab [root]="tab2Root" tabTitle="New Arrivals" tabIcon="tab-arrivals"></ion-tab>
+        <ion-tab [root]="tab3Root" tabTitle="Contact Us" tabIcon="tab-contact"></ion-tab>
+        <ion-tab [root]="tab4Root" tabTitle="About Us" tabIcon="tab-about"></ion-tab>
+        <ion-tab [root]="tab8Root" tabTitle="Profile" tabIcon="tab-profile"></ion-tab>
+      </ion-tabs>
+</div>
+
+<!-- *ngIf="dbService.userStorageData.type == 'Plumber'"  -->
+<div  *ngIf="dbService.userStorageData?.type == 'Plumber'" class="tabs">
+    <ion-tabs selectedIndex= {{index}}>
+        <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="tab-home"></ion-tab>
+        <ion-tab [root]="tab5Root" tabTitle="Offers" tabIcon="tab-gift"></ion-tab>
+        <ion-tab [root]="tab6Root" tabTitle="" tabIcon="center-tab"></ion-tab>
+        <ion-tab [root]="tab7Root" tabTitle="My Wallet" tabIcon="tab-points"></ion-tab>
+        <ion-tab [root]="tab8Root" tabTitle="Profile" tabIcon="tab-profile"></ion-tab>
+      </ion-tabs>
+</div>
+

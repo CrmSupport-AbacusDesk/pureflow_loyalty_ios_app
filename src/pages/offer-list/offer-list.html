@@ -1,0 +1,42 @@
+
+<ion-header class="main-header">
+    <ion-navbar>
+        <ion-title>My Offer</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content> 
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content  pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ng-container *ngIf="offer_list.length <= 0">
+        <div  class="data-not">
+            <img  src="assets/imgs/data-not-found.png" alt="#">
+        </div>
+    </ng-container>
+   
+
+    <div *ngIf="offer_list.length"class="main-div">
+            <div class="Product">
+                <button ion-item class="bg-product " *ngFor="let list of offer_list;let i=index" (click)="goOnOffersPage(list.id)">
+                    <div class="thumbnail">
+                        <img src="{{offer_imgurl + list.offer_image}}">
+                    </div>
+                    <div class="errow">
+                        <div class="list-tags wthspan">
+                                <!-- <span>Points :</span><span>{{list.offer_balance || 0}}</span> -->
+                            <h1>{{list.title |titlecase}}</h1>
+                            <p>Valid Upto : {{list.end_date | date:'d MMMM y'}}</p>
+                        </div>
+                        <i class="material-icons">trending_flat</i>
+                    </div>
+                </button>
+            </div>
+    </div>
+     	
+	
+</ion-content>

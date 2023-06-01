@@ -1,0 +1,222 @@
+<ion-header  class="home-header">
+    <ion-navbar>
+        <ion-title>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<div class="header-logo">
+    <img src="assets/imgs/logo.png">
+    <div class="btn-head">
+        <!-- <button  class="hs-menu cs-hdr-icons mr16" color="light" (click)="check_location()">
+            <img src="assets/imgs/pin.svg">
+        </button> -->
+        <button  class="hs-menu cs-hdr-icons mr16" color="light"  (click)="ShareApp()">
+            <img src="assets/imgs/share.svg">
+        </button>
+        <button class="hs-menu cs-hdr-icons" (click)="open_menu()"><i class="material-icons">menu</i></button>
+    </div>
+</div>
+
+<ion-content >
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content  pullingIcon="arrow-dropdown" pullingText="Pull to refresh"     refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <div class="banner" *ngIf="!banner.length">
+        <img src="assets/imgs/banner.png">
+    </div>
+    <div class="banner" *ngIf="banner.length">
+        <!-- <img src="assets/imgs/banner.png"> -->
+        <ion-slides pager autoplay=3000  >
+            <ion-slide *ngFor="let list of banner; let i=index" >
+                <img src="http://phpstack-83335-1831788.cloudwaysapps.com/dd_api/app/uploads/{{list.banner}}">
+            </ion-slide>
+        </ion-slides>
+    </div>
+
+    <div class="product-option">
+        <div class="main-box" (click)="goOnProductPage()">
+            <div class="product-box">
+                <img src="assets/imgs/product-1.svg">
+            </div>
+            <div class="heading">
+                <h4>Products</h4>
+            </div>
+            <span>{{prodCount.total ? prodCount.total : 0}}</span>
+        </div>
+
+        <div class="main-box" (click)="goToassignedDr()" *ngIf="dbService.userStorageData.all_data?.type!=7">
+            <div class="product-box">
+                <img src="assets/imgs/hand.svg">
+            </div>
+            <div class="heading">
+                <h4 *ngIf="dbService.userStorageData.all_data?.type==1">My Dealers</h4>
+                <h4 *ngIf="dbService.userStorageData.all_data?.type==3">My Distributors</h4>
+                <!-- <h4 *ngIf="dbService.userStorageData.all_data.type==3">My Distributors</h4> -->
+                <!--<h4>{{lable}}</h4> -->
+            </div>
+            <span *ngIf="dbService.userStorageData.all_data?.type==1">{{dashboardData.drCount}}</span>
+            <span *ngIf="dbService.userStorageData.all_data?.type==3">{{dashboardData.drCount}}</span>
+        </div>
+
+        <div class="main-box" (click)="goToarrivals()" >
+            <div class="product-box">
+                <img src="assets/imgs/neweffect.gif">
+            </div>
+            <div class="heading">
+                <h4>New Arrivals</h4>
+            </div>
+            <span>{{!prodCount.new ? '0' : prodCount.new}}</span>
+        </div>
+    </div>
+
+
+    <p *ngIf="offlineService.shouldStartSetUpProcess===true" style="text-align:center">Catalogue Offline Setup:</p>
+ 
+
+
+    <div class="pd-left-right16">
+
+        <div class="go-btn mb16" (click)="goToOrders('Primary')" *ngIf="dashboardData.primary && dbService.userStorageData.all_data?.type==1">
+            <div class="g-left">
+                <p>{{dashboardData.primary.total_count}}</p>
+                <p>Total</p>
+            </div>
+            <div class="g-right">
+                <div class="g-content" >
+                    <p>{{dbService.userStorageData?.type == '3' ? 'Order To Distributor' : 'Order To Gravity'}}</p>
+                    <p> ₹ {{dashboardData.primary.total_amount  }}</p>
+                </div>
+                <div class="g-count">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </div>
+            </div>
+        </div>
+
+        <div class="go-btn" (click)="goToOrders('Primary')" *ngIf="dashboardData.primary && dbService.userStorageData.all_data?.type!=1">
+
+            <div class="g-left">
+                <p>{{dashboardData.primary.total_count   }} </p>
+                <p>Total</p>
+            </div>
+            <div class="g-right">
+                <div class="g-content">
+                    <p>Order To PureFlow Indian</p>
+                    <p> ₹ {{dashboardData.primary.total_amount }}</p>
+                </div>
+                <div class="g-count">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </div>
+            </div>
+        </div>
+        <div class="go-btn" (click)="goToOrders('Secondary')" *ngIf="dashboardData.secondary && dbService.userStorageData.all_data?.type==1">
+
+            <div class="g-left">
+                <p>{{dashboardData.secondary.total_count   }}</p>
+                <p>Total</p>
+            </div>
+            <div class="g-right">
+                <div class="g-content">
+                    <p>Order From Dealer</p>
+                    <p> ₹ {{dashboardData.secondary.total_amount}}</p>
+                </div>
+                <div class="g-count">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pd-left-right16 mt20" (click)="goToVideosPage('Product Installation')">
+        <div class="go-btn artificial">
+            <div class="g-left">
+                <img src="assets/imgs/online-learning.svg">
+            </div>
+            <div class="g-right">
+                <div class="g-content" >
+                    <p>Installation Videos</p>
+                </div>
+                <div class="g-count">
+                    <i class="material-icons">arrow_right_alt</i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="go-btn" (click)="goToOrders()" *ngIf="dashboardData.secondary && dbService.userStorageData.type == '1'"> -->
+        <div style="padding: 15px 10px 10px 10px;">
+            <div class="btns" >
+                <button  (click)="newOrder()">
+                    <div class="lf-btn">
+                        <i class="material-icons">add_shopping_cart</i>
+                    </div>
+                    <div class="rt-btn">
+                        <p>Add New Order </p>
+                    </div>
+                </button>
+                <button (click)="goToNearestDealers('Plumber')">
+                    <div class="lf-btn">
+                        <i class="material-icons">engineering</i>
+                    </div>
+                    <div class="rt-btn">
+                        <p>Nearest Plumbers</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="btns" *ngIf="dbService.userStorageData.all_data?.type!=3">
+                <button (click)="delaerexecutive('executive')">
+                    <div class="lf-btn">
+                        <i class="material-icons">person_add</i>
+                    </div>
+                    <div class="rt-btn">
+                        <p>Add New Executive</p>
+                    </div>
+                </button>
+                <button (click)="goto_executive()">
+                    <div class="lf-btn">
+                        <i class="material-icons">work</i>
+                    </div>
+                    <div class="rt-btn">
+                        <p>My Executive</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="btns" *ngIf="dbService.userStorageData.all_data?.type!=3">
+                <button (click)="delaerexecutive('dealer')" >
+                    <div class="lf-btn">
+                        <i class="material-icons">how_to_reg</i>
+                    </div>
+                    <div class="rt-btn">
+                        <p>Add New Dealer</p>
+                    </div>
+                </button>
+                <button (click)="goOnContactPage()">
+                    <div class="lf-btn">
+                        <i class="material-icons">call</i>
+                    </div>
+                    <div class="rt-btn">
+                        <p>Contact Us</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <!-- <button (click)="notification()">get_count</button> -->
+
+        <!-- <div class="btns" *ngIf="dbService.userStorageData.type == '1'">
+            <button  >
+                <a (click)="goOnAboutPage()">
+                    <i class="material-icons">import_contacts</i>
+                    <p>About us</p>
+                </a>
+            </button>
+            <button   style="opacity: 0;">&nbsp;</button>
+        </div> -->
+
+
+
+    </ion-content>
+

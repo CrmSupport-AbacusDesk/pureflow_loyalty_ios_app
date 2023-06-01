@@ -1,0 +1,101 @@
+<ion-menu *ngIf="dbService.userStorageData" [content]="content" side="start" id="first" [swipeEnabled]="(dbService.userStorageData.token && dbService.userStorageData.loginType != 'CMS') ? true : false">
+    <ion-content>
+        <div class="home-list" style="position: sticky;top: 0px;">
+
+            <button ion-item (click)="((dbService.userStorageData.role_id == '' || dbService.userStorageData.role_id == undefined) && dbService.userStorageData.user_type != 'MARKET' && dbService.userStorageData.user_type != 'OFFICE') ? onGoToProfilePage() : ''" menuClose>
+
+                <div class="thumb">
+
+                    <div class="outer">
+
+                        <div class="innear">
+
+                            <ng-container *ngIf="((dbService.userStorageData.role_id != '' || dbService.userStorageData.role_id != undefined) && (dbService.userStorageData.user_type == 'MARKET' || dbService.userStorageData.user_type == 'OFFICE'))">
+
+                                <p>{{dbService.userStorageData.displayName[0]}}</p>
+
+                            </ng-container>
+
+                            <ng-container *ngIf="((dbService.userStorageData.role_id == '' || dbService.userStorageData.role_id == undefined) && dbService.userStorageData.user_type != 'MARKET' && dbService.userStorageData.user_type!='OFFICE')">
+
+
+                                <p *ngIf="!dbService.userStorageData?.all_data?.image && dbService.userStorageData.displayName!=undefined">{{dbService.userStorageData.displayName[0]}}</p>
+
+                            </ng-container>
+
+                            <ng-container *ngIf="((dbService.userStorageData.role_id == '' || dbService.userStorageData.role_id == undefined) && dbService.userStorageData.user_type != 'MARKET' && dbService.userStorageData.user_type != 'OFFICE')">
+
+                                <img *ngIf="dbService.userStorageData?.all_data?.image" src="http://phpstack-83335-1831788.cloudwaysapps.com/uploads/{{dbService.userStorageData?.all_data.image}}"   onerror="this.src='http://phpstack-83335-1831788.cloudwaysapps.com/uploads/no-thumbnail.jpg'">
+
+
+                            </ng-container>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="description person-name">
+
+                    <div class="innear" >
+
+                        <h2>{{dbService.userStorageData.displayName}}</h2>
+
+                        <p class="name-ellipsis" *ngIf="((dbService.userStorageData.role_id == '' || dbService.userStorageData.role_id == undefined) && dbService.userStorageData.user_type != 'MARKET' && dbService.userStorageData.user_type != 'OFFICE')">(Profile)</p>
+
+                        <ng-container *ngIf="((dbService.userStorageData.role_id == '' || dbService.userStorageData.role_id == undefined) && dbService.userStorageData.user_type != 'MARKET' && dbService.userStorageData.user_type != 'OFFICE')">
+
+                            <ion-icon name="ios-arrow-forward-outline" ></ion-icon>
+
+                        </ng-container>
+
+                    </div>
+                </div>
+
+            </button>
+
+        </div>
+
+        <span *ngFor="let p of pages">
+
+            <div class="option" menuClose *ngIf="p.show" (click)="((dbService.userStorageData.role_id != '' || dbService.userStorageData.role_id != undefined) && (dbService.userStorageData.user_type == 'MARKET' || dbService.userStorageData.user_type == 'OFFICE')) ?  onGoToSalesUserPageHandler(p): onGoToDrPageHandler(p)">
+
+                <i class="material-icons">{{p.icon}}</i>
+
+                <a href="#">{{p.title}}</a>
+
+            </div>
+
+        </span>
+
+    </ion-content>
+
+    <ion-footer style="background: #fff !important;">
+
+        <div class="btns" *ngIf="dbService.userStorageData.token" menuClose  (click)="onLogoutHandler()">
+
+            <button class="logout">
+
+                <div class="lf-btn">
+
+                    <i class="material-icons">power_settings_new</i>
+
+                </div>
+
+                <div class="rt-btn">
+
+                    <p>LOGOUT</p>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </ion-footer>
+
+
+</ion-menu>
+
+<ion-nav  [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

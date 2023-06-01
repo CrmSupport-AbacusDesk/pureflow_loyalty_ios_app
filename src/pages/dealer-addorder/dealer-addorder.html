@@ -1,0 +1,318 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            <h1>Add Order </h1>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div class="edit mt16">
+        <ion-list>
+            <ion-item class="cs-selectable" *ngIf="user_data.type == 3 && distributorSelected==true">
+                <ion-label><span>Select Distributor</span></ion-label>
+                <ionic-selectable item-content disabled [(ngModel)]="data.distributor_id" [items]="distributor_list"
+                    itemValueField="id"  itemTextField="company_name" name="company_name" value="id" [canSearch]="true">
+                </ionic-selectable>
+            </ion-item>
+
+            <ion-item class="cs-selectable" *ngIf="user_data.type == 3 && distributorSelected==false">
+                <ion-label><span>Select Distributor</span></ion-label>
+                <ionic-selectable item-content [(ngModel)]="data.distributor_id" [items]="distributor_list"
+                    itemValueField="id" itemTextField="company_name" name="company_name" value="id" [canSearch]="true">
+                </ionic-selectable>
+            </ion-item>
+
+            <ion-item class="cs-selectable" *ngIf="triggerCategory">
+                <ion-label><span>Category </span></ion-label>
+                <select-searchable #category item-content [(ngModel)]="data.category" [items]="categoryList"
+                    itemValueField="category" [itemTextField]="searchTrigger ? 'category' : 'product_name'" name="category" value="category"
+                    [canSearch]="true" [hasVirtualScroll]="true" (onChange)="this.booleanFlag = this.searchTrigger ; this.searchTrigger=true; getSubCategory(data.category);(searchTrigger=true)" (onSearch)="masterSearchFUnction($event,'category')">
+                </select-searchable>
+            </ion-item>
+
+            <!-- <ion-item class="cs-selectable" *ngIf="!triggerCategory">
+                <ion-label><span>Category </span></ion-label>
+                <select-searchable #category item-content [(ngModel)]="data.category" [items]="categoryList"
+                    itemValueField="category" itemTextField="product_name" name="category" value="category"
+                    [canSearch]="true" [hasVirtualScroll]="true" (onChange)="getSubCategory(data.category)" (onSearch)="testFUnction($event,'category')">
+                </select-searchable>
+            </ion-item> -->
+
+            <ion-item class="cs-selectable" *ngIf="data.category">
+                <ion-label><span>Sub-Category</span></ion-label>
+                <select-searchable #subCategory item-content [(ngModel)]="data.sub_category" [items]="subCatList"
+                    itemValueField="sub_category" itemTextField="sub_category" name="sub_category" value="sub_category"
+                    [canSearch]="true" [hasVirtualScroll]="true" (onChange)="getProductCode(data.sub_category)">
+                </select-searchable>
+            </ion-item>
+
+            <ion-item class="cs-selectable mb0" *ngIf="data.category">
+                <ion-label><span>Item Name</span></ion-label>
+                <select-searchable #productCode item-content [(ngModel)]="data.cat_no" [items]="autocompleteItems"
+                    itemValueField="id" itemTextField="product_name" name="cat_no" value="cat_no" [canSearch]="true"
+                    [hasVirtualScroll]="true" (onChange)="get_product_data(data.cat_no)">
+                    <!-- [hasVirtualScroll]="true" (onChange)="get_product_data(data.cat_no)" (onSearch)="masterSearchFUnction($event,'product')"> -->
+                </select-searchable>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div class=" edit" *ngIf="show_price">
+        <ion-list class="dflex1">
+            <ion-item class="mr8 mb0">
+                <ion-label floating><span>Code</span></ion-label>
+                <ion-input type="text" name="cat_no" [(ngModel)]="product.cat_no" readonly></ion-input>
+            </ion-item>
+
+
+            <ion-item class="ml8 input-bg">
+                <ion-label floating><span>Carton QTY</span></ion-label>
+                <ion-input type="tel" name="cartoon_qty" [(ngModel)]="product.cartoon_qty" (ngModelChange)="calculate_amt('cartoon_qty')"
+                    (keypress)="MobileNumber1($event)"></ion-input>
+            </ion-item>
+            <ion-item class="ml8 input-bg">
+                <ion-label floating><span>QTY</span></ion-label>
+                <ion-input type="tel" name="qty" [(ngModel)]="product.qty"
+                    (keypress)="MobileNumber1($event)" (ngModelChange)="calculate_amt('qty')"></ion-input>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div class="edit" *ngIf="show_price">
+        <ion-list class="dflex1">
+            <ion-item class="mr2 mb0">
+                <ion-label floating><span>Price</span></ion-label>
+                <ion-input type="text" name="price" [(ngModel)]="product.price" readonly></ion-input>
+            </ion-item>
+
+            <ion-item class="ml3 mb0">
+                <ion-label floating><span>Discount (%)</span></ion-label>
+                <ion-input type="text" name="discount" [(ngModel)]="product.discount" readonly></ion-input>
+            </ion-item>
+
+            <!-- <ion-item class="ml5 mb0">
+                <ion-label floating><span>GST (%)</span></ion-label>
+                <ion-input type="text" name="gst" [(ngModel)]="product.gst" readonly></ion-input>
+            </ion-item> -->
+
+            <ion-item class="ml5">
+                <ion-label floating><span>Amount</span></ion-label>
+                <ion-input type="text" name="amount" [(ngModel)]="product.subtotal_discounted" readonly></ion-input>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div class="edit">
+        <ion-list>
+            <ion-item class="cs-normal-select mt16" *ngIf="brand_list.length > 1">
+                <ion-label><span>Brand</span></ion-label>
+                <ion-select placeholder="Select Brand" name="brand" [(ngModel)]="product.brand">
+                    <ion-option *ngFor="let data of brand_list" value="{{data.brand_name}}">{{data.brand_name}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item class="cs-normal-select mt16" *ngIf="color_list.length > 1">
+                <ion-label><span>Color</span></ion-label>
+                <ion-select placeholder="Select Color" name="color" [(ngModel)]="product.color">
+                    <ion-option *ngFor="let data of color_list" value="{{data.color_name}}">{{data.color_name}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div class="edit" *ngIf="show_price">
+        <ion-list class="dflex1">
+            <ion-item class="mr2 mb0">
+                <ion-label class="noOverflow" floating><span>Master Packing</span></ion-label>
+                <ion-input type="text" name="price" [(ngModel)]="product.master_packing" readonly></ion-input>
+            </ion-item>
+
+            <ion-item class="ml5">
+                <ion-label floating><span>Box Packing</span></ion-label>
+                <ion-input type="text" name="amount" [(ngModel)]="product.std_packing" readonly></ion-input>
+            </ion-item>
+
+
+            <ion-item class="ml5">
+                <ion-label class="noOverflow" floating><span>Carton Packing</span></ion-label>
+                <ion-input type="text" name="amount" [(ngModel)]="product.cartoon_packing" readonly></ion-input>
+            </ion-item>
+       
+        </ion-list>
+    </div>
+
+    <div class="pd-left-right16">
+        <button *ngIf="show_price && product.qty > 0 " class="cs-button border-btn mt20"
+            (click)="addToCart(product.qty)">ADD TO LIST</button>
+    </div>
+
+    <div class="pd-left-right16">
+
+        <!-- //------ADD TO LIST FINISHED------// -->
+        <div class="dummycnt mt20 pb0" *ngIf="data.category && data.sub_category">
+            * To Add New Item in Order, Select Item Name Again.
+        </div>
+
+        <div class="cs-heading1 pl0" *ngIf="cart_array.length">
+            <p>PRODUCT INFORMATION</p>
+        </div>
+
+
+        <div class="list-box mt10" *ngFor="let row of cart_array;let i=index;">
+            <div class="mid mt0">
+                <div class="content-info">
+                    <!-- <div class="left-info">
+                        <div class="circle numbers">{{row.qty}}</div>
+                    </div> -->
+                    <div class="right-info">
+                        <p> {{row.category}} / {{row.cat_no}} / {{row.sub_category}}</p>
+                        <p> {{row.product_name}}</p>
+                    </div>
+                </div>
+                <div class="tag-info amount-view">
+                    <p>₹ {{row.price | number:'1.2-2'}}</p>
+                    <p>Price</p>
+                </div>
+                <div class="tag-info ml8" (click)="deleteItemFromCartAlertMessage(i,row.qty)">
+                    <a><i class="material-icons red-clr">delete_sweep</i></a>
+                </div>
+            </div>
+
+            <div class="three_boxes">
+                <div class="lower">
+                    <p>Discount (%)</p>
+                    <p>{{row.discount | number:'1.2-2'}}</p>
+                </div>
+                <div class="lower">
+                    <p>Price After Disc.</p>
+                    <p>{{row.discountedAmount | number:'1.2-2'}}</p>
+                </div>
+                <div class="lower">
+                    <p>Quantity</p>
+                    <p>{{row.qty}}</p>
+                </div>
+            </div>
+            <div class="three_boxes">
+                <div class="lower">
+                    <p>Master Packing</p>
+                    <p>{{row.master_packing}}</p>
+                </div>
+                <div class="lower">
+                    <p>Box Packing</p>
+                    <p>{{row.std_packing}}</p>
+                </div>
+                <div class="lower">
+                    <p>Carton Packing</p>
+                    <p>{{row.cartoon_packing}}</p>
+                </div>
+            </div>
+            <div class="time_show amount-listing pb5 border-none">
+                <p>Amount</p>
+                <p>₹ {{row.subtotal_discounted | number:'1.2-2'}}</p>
+            </div>
+        </div>
+        <div *ngIf="sub_total" class="time_show amount-listing">
+            <p>Total Quantity</p>
+            <p>{{totalQty}}</p>
+        </div>
+        <div *ngIf="sub_total" class="time_show amount-listing">
+            <p>Sub Total</p>
+            <p>₹ {{sub_total | number:'1.2-2'}} /-</p>
+        </div>
+        <div *ngIf="dis_amt" class="time_show amount-listing">
+            <p>Discount</p>
+            <p>₹ {{dis_amt | number:'1.2-2'}} /-</p>
+        </div>
+        <div *ngIf="sub_total" class="time_show amount-listing ">
+            <p>Net Amount</p>
+            <p>₹ {{net_total | number:'1.2-2'}} /-</p>
+        </div>
+        <!-- <div *ngIf="spcl_dis_amt" class="time_show amount-listing"> -->
+        <div class="time_show amount-listing">
+
+            <p *ngIf="type=='Discount'">{{!SpecialDiscountLable ? 'Special Discount' : SpecialDiscountLable |
+                titlecase}} ({{special_discount}}%)</p>
+            <p *ngIf="type!='Discount'">{{!SpecialDiscountLable ? 'Additional Charges' : SpecialDiscountLable |
+                titlecase}} ({{special_discount}}%)</p>
+            <p *ngIf="type=='Discount'">- ₹ {{spcl_dis_amt | number:'1.2-2'}} /-</p>
+            <p *ngIf="type!='Discount'">₹ {{spcl_dis_amt | number:'1.2-2'}} /-</p>
+        </div>
+        <div *ngIf="grand_total" class="time_show amount-listing border-none">
+            <p>Grand Total</p>
+            <p>₹ {{grand_total | number:'1.0-0'}} /-</p>
+        </div>
+        <div class="edit m0">
+            <ion-list>
+                <ion-item class="cs-textarea1" *ngIf="cart_array.length">
+                    <ion-label floating><span>Remark </span></ion-label>
+                    <ion-textarea type="text" name="order_remark" [(ngModel)]="user_data.order_remark"></ion-textarea>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+    <div class="border-sepration" *ngIf="cart_array.length"></div>
+
+    <div class="cs-heading1" *ngIf="cart_array.length">
+        <p>Transport Information</p>
+    </div>
+
+    <div class="pd-left-right16">
+        <div class="edit m0" *ngIf="cart_array.length">
+            <ion-list>
+                <ion-item>
+                    <ion-label floating><span>Private Marka</span></ion-label>
+                    <ion-input type="text" style="height: 28px;" name="private_marka"
+                        [(ngModel)]="user_data.private_marka"></ion-input>
+                </ion-item>
+
+            </ion-list>
+        </div>
+
+        <div class="edit m0" *ngIf="cart_array.length">
+            <ion-list>
+                <ion-item>
+                    <ion-label floating><span>Transport Name</span></ion-label>
+                    <ion-input type="text" style="height: 28px;" name="transport_name"
+                        [(ngModel)]="user_data.transport_name"></ion-input>
+                </ion-item>
+            </ion-list>
+        </div>
+
+        <div class="edit m0" *ngIf="cart_array.length">
+            <ion-list>
+                <ion-item>
+                    <ion-label floating><span>Transport Mobile</span></ion-label>
+                    <ion-input type="tel" style="height: 28px;" name="transport_mobile" min="0" maxlength="10"
+                        minlength="10" (keypress)="MobileNumber($event)" [(ngModel)]="user_data.transport_mobile">
+                    </ion-input>
+                </ion-item>
+            </ion-list>
+        </div>
+
+        <div class="edit m0" *ngIf="cart_array.length">
+            <ion-list>
+                <ion-item>
+                    <ion-label floating><span>Transport Address</span></ion-label>
+                    <ion-input type="text" style="height: 28px;" name="transport_address"
+                        [(ngModel)]="user_data.transport_address"></ion-input>
+                </ion-item>
+            </ion-list>
+        </div>
+
+        <div class="align-btn">
+            <button class="cs-button border" *ngIf="cart_array.length > 0"
+                (click)="user_data.order_status='Draft';save_orderalert('save')">
+                <i class="material-icons">save</i>
+                SAVE AS DRAFT
+            </button>
+            <button class="cs-button w200" *ngIf="cart_array.length > 0"
+                (click)="user_data.order_status='Pending';save_orderalert('submit')">SUBMIT</button>
+        </div>
+
+    </div>
+
+
+</ion-content>

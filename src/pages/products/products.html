@@ -1,0 +1,74 @@
+
+<ion-header class="main-header remove">
+    <ion-navbar>
+        <ion-title>Category</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <div class="search add-search">
+            <div class="filter">
+                <ion-searchbar type='text' name='category_name' [(ngModel)]="filter.category_name1" (keyup.enter)="goToProductsWithSearch(filter.category_name1)"></ion-searchbar>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="listing add-images grid-listing">
+
+    <!-- <ion-refresher (ionRefresh)="getProductCategoryList($event)">
+        <ion-refresher-content  pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher> -->
+
+
+    <div class="nothing-here"  *ngIf="!prod_cat_list.length && no_rec">
+        <div class="outer">
+            <div class="innear">
+                <img src="assets/imgs/no_found.svg" alt="">
+                <p>Data not Available</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="prod_cat_list.length" class="main-div" >
+        <ion-list *ngFor="let list of prod_cat_list; let i=index">
+            <button  *ngIf="!list.image" ion-item (click)="goOnProductDetailPage(list.id, list.imageCompletePath)">
+                <div class="image-manage">
+                    <!-- <img *ngIf="!list.image || list.image.length==0" src="assets/imgs/no-thumbnail.jpg"> -->
+                    <!-- <img *ngIf="list.image && list.image.length!=0" src="{{list.imageCompletePath}}"> -->
+                    <img  src="imageUrl+{{list.actual_image_name}}">
+                  
+
+                </div>
+                <p>{{list.category_name}}</p>
+            </button>
+
+            <button  *ngIf="list.image" ion-item (click)="goOnProductDetailPage(list.id,list.imageCompletePath)">
+                <div class="image-manage">
+                    <!-- <img *ngIf="!list.image || list.image.length==0" src="assets/imgs/no-thumbnail.jpg"> -->
+                    <!-- <img *ngIf="list.image && list.image.length!=0" src="{{list.imageCompletePath}}"> -->
+                    <img src="{{list.image}}">
+                </div>
+                <p>{{list.category_name}}</p>
+            </button>
+
+        </ion-list>
+
+    </div>
+
+    <div class="main-div" *ngIf="!prod_cat_list.length && !no_rec">
+        <ion-list *ngFor="let row of skelton" >
+            <button class="skleton-box"></button>
+        </ion-list>
+    </div>
+
+    <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+        <div class="main-div">
+          <ion-list *ngFor="let row of skelton" >
+            <button class="skleton-box"></button>
+        </ion-list>
+          </div>
+
+    </ion-infinite-scroll> -->
+
+</ion-content>
+

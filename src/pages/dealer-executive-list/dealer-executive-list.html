@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            <h1>{{exeType}} Executive</h1>
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="light" (click)="add_exe()">
+                <ion-icon name="md-add-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar>
+        <div class="search add-search">
+            <div class="filter">
+                <ion-searchbar type='text' name="master" [(ngModel)]="filter.master" (ngModelChange)="get_executivessearch()"></ion-searchbar>
+                <!-- <button class="date-pick">
+                    <label class="chedate">
+                        <input type="date" name="date" [(ngModel)]="filter.date" (ngModelChange)="get_executives()">
+                        <i class="material-icons">date_range</i>
+                    </label>
+                </button> -->
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="nothing-here"  *ngIf="!executive_list.length && loadDataa==0 ">
+        <div class="outer">
+            <div class="innear">
+                <img src="assets/imgs/nothing.svg" alt="">
+                <p>Data not Available</p>
+            </div>
+        </div>
+    </div>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content  pullingIcon="arrow-dropdown" pullingText="Pull to refresh"     refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    
+    <!-- (" -->
+    <div class="cs-new-list" *ngFor="let row of executive_list" (click)="exeType == 'My' ? goToDetail(row.id) : ''">
+        <div class="afla-icon">{{row.name[0] | titlecase}}</div>
+        <div class="content">
+            <p>{{row.name | titlecase}}</p>
+            <span>{{row.contact_01}}</span>
+        </div>
+        <div class="right-icon" *ngIf="exeType == 'My'">
+            <i class="material-icons">keyboard_arrow_right</i>
+        </div>
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    
+    <!-- <div class="list-outer ordlist">
+        <div class="list-inner" *ngFor="let row of executive_list" >
+            <div class="heading space-between" >
+                <p></p>
+                <p></p>
+                <span><i class="material-icons">insert_invitation</i>{{row.date_created | date:'d MMM y'}}</span>
+            </div>
+            <div style="padding: 0px 16px;">
+                <div class="min-heading mb0">
+                    <div class="cs-l">
+                        <h2>Contact No. : </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div> -->
+</ion-content>
+<!-- *ngIf="user_data.type == '1'" -->
+<ion-footer class="csm-footer-tabs" >
+    <div class="ftabs">
+        <button class="fab-change" [ngClass]="{'active': exeType == 'My'}" (click)="change_tab('My');" ><p>My Executive</p> 
+            <span class="counter fa-count">{{my_cn}}</span>
+        </button>
+        
+        <button class="fab-change" [ngClass]="{'active': exeType == 'Gravity'}" (click)="change_tab('Gravity');"><p>PureFlow Indian Executive</p>
+            <span class="counter fa-count">{{company_cn}}</span>
+        </button>
+    </div>
+</ion-footer> 

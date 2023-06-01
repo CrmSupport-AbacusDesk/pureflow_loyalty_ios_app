@@ -1,0 +1,202 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            <h1 *ngIf="order_type == 'Primary' && dbService.userStorageData.type==1"> Order To PureFlow Indian</h1>
+            <h1 *ngIf="order_type == 'Primary' && dbService.userStorageData.type==7"> Order To PureFlow Indian</h1>
+            <h1 *ngIf="order_type == 'Primary' && dbService.userStorageData.type==3"> Order To Distributor</h1>
+            <h1 *ngIf="order_type == 'Secondary' && dbService.userStorageData.type==1"> Order From Dealer</h1>
+        </ion-title>
+    </ion-navbar>
+    <ion-navbar>
+        <div class="search add-search">
+            <div class="filter">
+                <ion-searchbar type='text' name="master" [(ngModel)]="filter.master" (ngModelChange)="get_orderssearch()"></ion-searchbar>
+                <a class="date-pick">
+                    <label class="chedate">
+                        <input type="date" name="date" [(ngModel)]="filter.date" (ngModelChange)="get_orderssearch()" />
+                        <i class="material-icons">date_range</i>
+                    </label>
+                </a>
+            </div>
+        </div>
+
+    </ion-navbar>
+</ion-header>
+<div class="text-line" *ngIf="filter.date">
+    <div class="lf-text">
+        <p>Date</p>
+        <p>{{filter.date | date:'d MMM y'}}</p>
+    </div>
+    <div class="rf-text">
+        <i class="material-icons" (click)="filter.date='';get_orderssearch()">cancel</i>
+    </div>
+</div>
+
+<ion-content>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <!-- <div class="round-tab pb0">
+        <ul>
+            <ng-container *ngIf="order_type == 'Primary'">
+                <li [ngClass]="{'active' : filter.order_status=='Draft'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Draft';get_orders()">
+                    <p>Draft <span>{{count.draft}}</span></p>
+                </li>
+            </ng-container>
+            <li [ngClass]="{'active' : filter.order_status=='Pending'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Pending';get_orders()">
+                <p>Placed <span>{{count.pending}}</span></p>
+            </li>
+                <li [ngClass]="{'active' : filter.order_status=='Approved'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Approved';get_orders()">
+                    <p>Accepted <span>{{count.approved}}</span></p>
+                </li>
+                
+                <li [ngClass]="{'active' : filter.order_status=='Dispatch'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Dispatch';get_orders()">
+                    <p>Dispatch <span>{{count.dispatch}}</span></p>
+                </li>
+                
+                
+                
+                <li [ngClass]="{'active' : filter.order_status=='Reject'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Reject';get_orders()">
+                    <p>Reject <span>{{count.rejected}}</span></p>
+                </li>
+            </ul>
+        </div> -->
+
+    <!-- <div class="playstore-tabs">
+            <ul>
+                <ng-container *ngIf="order_type == 'Primary'">
+                    <li [ngClass]="{'active' : filter.order_status=='Draft'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Draft';get_orders()">
+                        Draft {{count.draft}}
+                    </li>
+                </ng-container>
+                <li [ngClass]="{'active' : filter.order_status=='Pending'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Pending';get_orders()">
+                    Placed {{count.pending}}
+                </li>
+                <li [ngClass]="{'active' : filter.order_status=='Approved'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Approved';get_orders()">
+                    Accepted {{count.approved}}
+                </li>
+                <li *ngIf="dbService.userStorageData.type==1" [ngClass]="{'active' : filter.order_status=='Dispatch'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Dispatch';get_orders()">
+                    Dispatched {{count.dispatch}}
+                </li>
+                <li *ngIf="dbService.userStorageData.type==3" [ngClass]="{'active' : filter.order_status=='Dispatch'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Dispatch';get_orders()">
+                    Recieved {{count.dispatch}}
+                </li>
+                <li [ngClass]="{'active' : filter.order_status=='Reject'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Reject';get_orders()">
+                    Refer Back {{count.rejected}}
+                </li>
+            </ul>
+        </div> -->
+
+    <div class="capsule-tabs">
+        <ul>
+            <ng-container *ngIf="order_type == 'Primary'">
+                <li [ngClass]="{'active' : filter.order_status=='Draft'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Draft';order_list = [];get_orders1()">
+                    <p>Draft<span>{{count.draft}}</span></p>
+                </li>
+            </ng-container>
+            <li [ngClass]="{'active' : filter.order_status=='Pending'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Pending';order_list = [];get_orders1()">
+                <p>Placed<span>{{count.pending}}</span></p>
+            </li>
+            <li [ngClass]="{'active' : filter.order_status=='Approved'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Approved';order_list = [];get_orders1()">
+                <p>Accepted<span>{{count.approved}}</span></p>
+            </li>
+            <li [ngClass]="{'active' : filter.order_status=='PDispatch'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='PDispatch';order_list = [];get_orders1()">
+                <p>Partially Dispatched<span>{{count.pdispatch}}</span></p>
+            </li>
+            <li [ngClass]="{'active' : filter.order_status=='Dispatch'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Dispatch';order_list = [];get_orders1()">
+                <p>Completely Dispatched<span>{{count.dispatch}}</span></p>
+            </li>
+            <!-- <li *ngIf="dbService.userStorageData.type==3" [ngClass]="{'active' : filter.order_status=='Dispatch'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Dispatch';constant.tabSelectedOrder='Dispatch';get_orders1()">
+                    <p>Recieved<span>{{count.dispatch}}</span></p>
+                </li> -->
+            <li [ngClass]="{'active' : filter.order_status=='Reject'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Reject';order_list = [];get_orders1()">
+                <p>Referred Back<span>{{count.rejected}}</span></p>
+            </li>
+            <li [ngClass]="{'active' : filter.order_status=='Pre Close'}" (click)="filter.date='';filter.master='';start=0;filter.order_status='Pre Close';order_list = [];get_orders1()">
+                <p>Pre Closed<span>{{count.pre_close}}</span></p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="list-outer ordlist">
+        <!-- <div class="list-inner" [ngClass]="{'pending': (row.order_status == 'Pending' || row.order_status == 'Draft'), 'reject': row.order_status == 'Reject', 'approved': row.order_status == 'Dispatch' }">
+                <div class="heading space-between" >
+                    <p *ngIf="row.order_status=='Pending'">Order Placed</p>
+                    <p *ngIf="row.order_status=='Draft'">Draft</p>
+                    <p *ngIf="row.order_status=='Approved'">Order Accepted</p>
+                    <p *ngIf="row.order_status=='Dispatch'">Dispatch</p>
+                </div>
+            </div> -->
+    </div>
+
+    <div class="pd-left-right16 mb80">
+        <div class="list-box mt16" *ngFor="let row of order_list" (click)="goOnOrderDetail(row.id)">
+            <div class="upper" *ngIf="row.order_status!='Draft'">
+                <div class="left-date">
+                    <div class="date-section">
+                        <p>{{row.date_created| date:'d MMM y hh:mm a'}}</p>
+                        <p>Date</p>
+                    </div>
+                    <!-- <div class="date-section" *ngIf="row.order_status!='Draft'">
+                            <p>{{row.order_no}}</p>
+                            <p>Order ID</p>
+                        </div> -->
+                </div>
+                <div class="right-date">
+                    <button><p >{{row.order_no}}</p></button>
+                </div>
+            </div>
+            <div class="mid" [ngClass]="{'mt0' : row.order_status=='Draft' }">
+                <div class="content-info">
+                    <div class="left-info">
+                        <div class="circle" *ngIf="order_type == 'Primary' && dbService.userStorageData.id==row.created_by && row.created_by_type=='channel partner'">S</div>
+                        <div class="circle" *ngIf="order_type == 'Primary' && dbService.userStorageData.id!=row.created_by && row.created_by_type!='channel partner'">{{row.order_creator.substring(0,1).toUpperCase()}}</div>
+                    </div>
+                    <div class="right-info">
+                        <p *ngIf="order_type == 'Primary' && dbService.userStorageData.id==row.created_by && row.created_by_type=='channel partner'"> Created By : Self</p>
+                        <p *ngIf="order_type == 'Primary' && dbService.userStorageData.id!=row.created_by && row.created_by_type!='channel partner'"> Created By : {{row.order_creator | titlecase}}</p>
+                        <p *ngIf="order_type == 'Secondary'"> Dealer : {{row.dr_name.toUpperCase()}}</p>
+                        <p> Total Item : {{row.order_item ? row.order_item : '0'}}</p>
+                    </div>
+                </div>
+                <div class="tag-info amount-view">
+                    <p>₹ {{row.order_grand_total ? row.order_grand_total : '0'}}</p>
+                    <p>Amount</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nothing-here" style="height: 50%;" *ngIf="!order_list?.length && sendRequest">
+        <div class="outer">
+            <div class="innear">
+                <img src="assets/imgs/no_found.svg" alt="">
+                <p>Data not Available</p>
+            </div>
+        </div>
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="flag!=1">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
+
+<!-- <ion-footer class="csm-footer-tabs" *ngIf="user_data.type == '1'">
+        <div class="ftabs">
+            <button class="fab-change" [ngClass]="{'active': order_type == 'Primary'}" (click)="change_tab('Primary');"><p>Order To Gravity</p>
+                <span class="counter fa-count">{{pri_ord}}</span>
+            </button>
+            
+            <button class="fab-change" [ngClass]="{'active': order_type == 'Secondary'}" (click)="change_tab('Secondary');" ><p>Order From Dealer</p> 
+                <span class="counter fa-count">{{sec_ord}}</span>
+            </button>
+        </div>
+    </ion-footer>  -->
+
+<div class="cus-fab" *ngIf="user_data.type != 1">
+    <button (click)="add_order()">
+            <i class="material-icons">add</i>
+        </button>
+</div>

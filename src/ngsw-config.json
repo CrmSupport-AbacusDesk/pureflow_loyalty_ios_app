@@ -1,0 +1,16 @@
+{
+  "index": "/index.html",
+  "assetGroups": [{
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/assets/**"
+      ],
+      "urls": [
+        "http://app.gravitybath.com/dd_api/app/Http/Controllers/Admin/Master/appOfflineUploads/productImage/**"
+      ]
+    }
+  }]
+}

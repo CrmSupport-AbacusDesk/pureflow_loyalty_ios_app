@@ -1,0 +1,102 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-request-location-accuracy": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true",
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova.plugins.diagnostic": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-android-support-gradle-release": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "call-number": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+      "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "polarcape-cordova-plugin-document-handler": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-media": {
+      "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO",
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-telerik-imagepicker": {
+      "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-document-viewer": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "cordova-plugin-market": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "uk.co.workingedge.cordova.plugin.sqliteporter": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.respite.abacusdesk"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+
+<ion-header class="main-header">
+    <ion-navbar>
+        <ion-title>{{ 'My Points' | translate }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <div class="p16 pt16" *ngIf="karigar_point.length != null || karigar_point.length != '' || karigar_point.length != undefind ">
+        
+        <div class="card-list" (click)="change_page('scan')">
+            <div class="card-content">
+                <img src="assets/icon/scan.png">
+                <p>{{ 'Earn By Scan Points' | translate }}</p>
+            </div>
+            <div class="points">
+                {{karigar_point.earn_by_scan}}
+            </div>
+        </div>
+        
+        <div class="card-list" (click)="change_page('service')"> 
+            <div class="card-content">
+                <img src="assets/icon/service.png">
+                <p>{{ 'Earn By Service Points' | translate }}</p>
+            </div>
+            <div class="points">
+                {{karigar_point.earn_by_service}}
+            </div>
+        </div>
+        
+        
+        <div class="card-list" (click)="change_page('referal')"> 
+            <div class="card-content">
+                <img src="assets/icon/referal.png">
+                <p>{{ 'Earn By Referal Points' | translate }}</p>
+            </div>
+            <div class="points">
+                {{karigar_point.earn_by_referal}}
+            </div>
+        </div>
+        <div class="point-table" >
+            <table>
+                <tr>
+                    <td>{{ 'Total Earn Point' | translate }}</td>
+                    <td class="point-font w110  pr29 text-right">{{karigar_point.total_earn}}</td>                  
+                </tr>
+                <tr (click)="change_page('redeem')">
+                    <td>{{ 'Redeem Point' | translate }}</td>
+                    <td class="point-font red-text w110 text-right"> 
+                        <p>
+                            {{karigar_point.total_redeem}}
+                            <i class="material-icons">chevron_right</i>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-list"> 
+            <div class="card-content">
+                <img src="assets/icon/wallet.png">
+                <p>{{ 'Total Balance' | translate }}</p>
+            </div>
+            <div class="points flat">
+                {{karigar_point.total_balance}}
+            </div>
+        </div>
+
+        <!-- 
+            <ul class="line">
+                <li> 
+                    <ul class="for_inline">
+                        <li>{{ 'Total Earn' | translate}}&nbsp;:-</li>
+                        <li> <span class="fw_700">&nbsp;&nbsp;</span></li>
+                        <li></li>
+                    </ul>
+                </li>
+                <ul class="for_inline" (click)="change_page('redeem')">
+                    <li>{{ 'Redeem' | translate }}&nbsp;:-&nbsp;&nbsp;&nbsp;</li>
+                    <li>{{karigar_point.total_redeem}}</li>
+                    <li> <i class="material-icons">chevron_right</i></li>
+                </ul>
+            </ul>
+            <ul class="pt10">
+                <ul class="for_inline line_bottom">
+                    <li>{{ 'Total Balance' | translate }}&nbsp;:-</li>
+                    <li> <span class="fw_700">&nbsp;&nbsp;{{karigar_point.total_balance}}</span></li>
+                    <li> </li>
+                </ul>
+            </ul> -->
+        </div>
+        <!-- (click)="goOnShippingPage(list.id)" --> 
+    </ion-content>
+    
+    <!-- <ion-footer class="csm-footer-tabs">
+        <div class="ftabs">
+            <button ion-item class="ml0" [ngClass]="{'active': filter.active_tab == 'points'}" (click)="change_tab('points')"><p>{{ 'Points History' | translate}}</p></button>
+            <button ion-item class="ml0" [ngClass]="{'active': filter.active_tab == 'redeem'}" (click)="change_tab('redeem')"><p>{{ 'Redeem History' | translate}}</p></button>
+            <button ion-item class="ml0" [ngClass]="{'active': filter.active_tab == 'offer_list'}" (click)="change_tab('offer_list')"><p>{{ 'Redeem Request' | translate }}</p></button>
+        </div>
+    </ion-footer> -->

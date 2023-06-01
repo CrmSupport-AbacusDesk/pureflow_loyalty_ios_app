@@ -1,0 +1,183 @@
+<!--
+  Generated template for the PointHistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="scan === 'scan'">{{ 'Earn By Scan History' | translate}}</ion-title>
+    <ion-title *ngIf="service1  === 'service'">{{ 'Earn By Service History' | translate}}</ion-title>
+    <ion-title *ngIf="referal === 'referal'">{{ 'Earn By Referal History' | translate}}</ion-title>
+    <ion-title *ngIf="redeem === 'redeem'">{{ 'Redeem History' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+   <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+  <div class="scan" *ngIf="scan === 'scan'">
+    <div *ngIf="!coupon_list.length" class="data-not">
+      <img  src="assets/imgs/data-not-found.png">
+    </div>
+    <div *ngIf="coupon_list.length > 0">
+      <div class="full_width" *ngFor="let list of coupon_list; let i=index">
+        <div class="part_one">
+            <ul class="pt10">
+              <li><strong>{{'Coupon Code' | translate}}:&nbsp;</strong>{{list.coupon_code}}</li>
+              <li><strong>{{ 'Product Name' | translate}}:&nbsp;</strong>{{list.product_name}}</li>
+              <li><p class="date_color">{{list.scan_date  | date:'d-MMM-y, h:mm a'}}</p></li>
+           </ul>
+         </div>
+         <div class="part_two pt10">
+            <span class="point_bold">{{list.coupon_value}}</span><span class="static_point">{{'Points' | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataScan($event)" *ngIf="flag!=1">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  </div>
+  <div class="scan" *ngIf="service1 === 'service'">
+    <div *ngIf="!service.length" class="data-not">
+      <img  src="assets/imgs/data-not-found.png">
+    </div>
+    <div *ngIf="service.length > 0">
+      <div class="full_width" *ngFor="let list of service; let i=index">
+        <div class="part_one">
+            <ul class="pt10">
+              <li><strong>{{ 'Complaint Type' | translate}}:&nbsp;&nbsp;</strong><span style="text-transform: capitalize;">{{list.complaint_type}}</span></li>
+              <li>{{list.customerName}}-{{list.customerMobileNo}}</li>
+              <li>
+                <strong>{{ 'Date' | translate}}</strong>
+                <span class="date_color">{{list.plumber_payment_date  | date:'d-MMM-y'}}</span></li>
+           </ul>
+         </div> 
+         <div class="part_two pt10">
+          <span class="point_bold">{{list.plumber_payment}}</span><span class="static_point">{{'Points' | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataService($event)" *ngIf="flag!=1">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  </div>
+  <div class="scan" *ngIf="referal === 'referal'">
+    <div *ngIf="!referal_histroy.length" class="data-not">
+      <img  src="assets/imgs/data-not-found.png">
+    </div>
+    <div *ngIf="referal_histroy.length > 0">
+      <div class="full_width" *ngFor="let list of referal_histroy; let i=index">
+        <div class="part_one">
+            <ul class="pt10">
+              <!-- <strong>{{ 'Customer Name' | translate}}:</strong> -->
+              <li class="bold">{{list.point_description}}</li>
+              <li><p class="date_color">{{list.date_created  | date:'d-MMM-y'}}</p></li>
+           </ul>
+         </div>
+         <div class="part_two pt10">
+            <span class="point_bold">{{list.points}}</span><span class="static_point">{{'Points' | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataReferal($event)" *ngIf="flag!=1">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  </div>
+  <div class="scan" *ngIf="redeem === 'redeem'">
+    
+    <div *ngIf="transaction_detail.length > 0">
+      <!-- <h6 class="text-center pb10">Redeem History</h6> -->
+      <div class="transaction-list">
+        <div class="his-listing border-bottom" *ngFor="let list of transaction_detail; let i=index">
+            <button ion-item class="main-list">
+            <div class="tr-content">
+                <div class="inner">
+                    <div class="tr-cicle">
+                        <i class="material-icons">call_made</i>
+                    </div>
+                    <div class="tr-tags">
+                        <h2>{{ 'Request Send' | translate}}</h2>
+                        <h1>{{list.gift_title | titlecase}}</h1>
+                        <p> {{'Req Id' | translate}} : REQ# {{list.id }}</p>
+                        <span *ngIf="list.gift_status=='Reject' && receive_status != ''">{{list.reject_reason | titlecase}}</span>
+                    </div>
+                </div>			
+                <div class="tr-points"  >
+                    <h2>{{list.coupon_points}}</h2>
+                    <p>{{ 'Points' | translate}}</p>
+                    <span class="refund" *ngIf="list.gift_status=='Reject' && receive_status != ''" style="font-size: 12px!important;">{{'Refunded' | translate}}</span>
+                </div>
+            </div>
+        </button>
+
+            <div class="tr-status" *ngIf="list.gift_status=='Pending' && list.receive_status==''">
+                <div class="tag">
+                    <h1>{{list.date_created |date:'d MMM y'}}</h1>
+                </div>
+                <div class="pending">
+                    <p>{{list.gift_status}}</p>
+                </div>
+            </div>
+            <div class="tr-status" *ngIf="list.gift_status=='Reject' && list.receive_status=='' ">
+                <div class="tag">
+                    <h1>{{list.date_created |date:'d MMM y'}}</h1>
+                </div>
+                <div class="reject">
+                    <p>{{list.gift_status}}</p>
+                </div>
+            </div>
+            <div class="tr-status" *ngIf="list.gift_status=='Approved' && list.receive_status==''">
+                <div class="tag">
+                    <h1>{{list.date_created |date:'d MMM y'}}</h1>
+                </div>
+                <div class="approved">
+                    <p>{{list.gift_status}}</p>
+                </div>
+            </div>
+            <div class="tr-status" *ngIf="list.receive_status=='Transfer'">
+                <div class="tag btn-received">
+                    <!-- <button (click)="recvConfirmation(list.id)">Receive</button> -->
+                    <h1>{{'Transfer Date' | translate}}:{{list.received_date |date:'d MMM y'}}</h1>
+                </div>
+                <div class="shipped">
+                    <p>{{ 'Transfer' | translate}}</p>
+                </div>
+            </div>
+            <div class="tr-status" *ngIf="list.transaction_no || list.payment_mode">
+              <div class="tag btn-received">
+                  <!-- <button (click)="recvConfirmation(list.id)">Receive</button> -->
+                  <h1>{{'TXN NO.' | translate}}:{{list.transaction_no}}</h1>
+              </div>
+              <div class="shipped">
+                  <p>{{list.payment_mode}}</p>
+              </div>
+          </div>
+            <div class="tr-status" *ngIf="list.receive_status=='Received'">
+                <div class="tag">
+                    <h1>{{'Receive on' | translate}} : {{list.received_date | date:'d MMM y'}}</h1>
+                </div>
+                <div class="received">
+                    <p>{{'Receive' | translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div *ngIf="!transaction_detail.length" class="data-not">
+      <img  src="assets/imgs/data-not-found.png">
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataRedeem($event)" *ngIf="flag!=1">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  </div>
+ 
+
+</ion-content>
